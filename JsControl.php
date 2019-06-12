@@ -66,7 +66,11 @@ class JsControl extends Widget{
     }
     
     public function populateOption($selector, $array) {
-        $this->actions[] = ['action' => 'OPTION', 'selector' => $selector, 'data' => $array];
+        $options = '<option>Selecione</option>';
+        foreach($array as $key => $value){
+            $options .= "<option value='{$key}'>{$value}</option>";
+        }
+        $this->actions[] = ['action' => 'OPTION', 'selector' => $selector, 'data' => $options];
     }
     
     public function updateGrid($id, $url = '') {
@@ -131,5 +135,6 @@ class JsControl extends Widget{
         if(count($this->actions) > 0 && $rq->headers->has('X-JSCONTROL')){
             echo Json::encode(['actions' => $this->actions, 'success' => $this->status]);
         }
+        exit;
     }
 }
