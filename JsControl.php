@@ -73,8 +73,8 @@ class JsControl extends Widget{
         $this->actions[] = ['action' => 'OPTION', 'selector' => $selector, 'data' => $options];
     }
     
-    public function updateGrid($id, $url = '') {
-        $this->actions[] = ['action' => 'UPDATEGRID', 'id' => $id, 'url' => $url];
+    public function updateGrid($id, $data = null, $url = '') {
+        $this->actions[] = ['action' => 'UPDATEGRID', 'id' => $id, 'data' => $data, 'url' => $url];
     }
     
     public function remove($selector){

@@ -43,11 +43,13 @@ function returnRequest(data) {
                 $(act.selector).attr(act.data);
                 break;
             case 'UPDATEGRID':
-                updateGrid(act.id, act.url);
+                updateGrid(act.id, act.url, act.data);
                 break;
             case 'OPEN-DIALOG':
                 $('#dialog .modal-title').html(act.title);
                 $('#dialog .modal-body').html(act.data);
+                $('#dialog .modal-dialog').removeClass('modal-lg');
+                $('#dialog .modal-dialog').removeClass('modal-sm');
                 if (act.type != '') {
                     $('#dialog .modal-dialog').addClass(act.type);
                 } else if (act.size != 0) {
