@@ -73,7 +73,7 @@ class JsControl extends Widget{
         $this->actions[] = ['action' => 'OPTION', 'selector' => $selector, 'data' => $options];
     }
     
-    public function updateGrid($id, $options) {
+    public function updateGrid($id, $options = null) {
         $this->actions[] = ['action' => 'UPDATEGRID', 'id' => $id, 'options' => $options];
     }
     
