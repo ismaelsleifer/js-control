@@ -43,7 +43,7 @@ function returnRequest(data) {
                 $(act.selector).attr(act.data);
                 break;
             case 'UPDATEGRID':
-                updateGrid(act.id, act.url, act.data);
+                updateGrid(act.id, act.options);
                 break;
             case 'OPEN-DIALOG':
                 $('#dialog .modal-title').html(act.title);
