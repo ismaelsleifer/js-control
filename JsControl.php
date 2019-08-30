@@ -32,6 +32,9 @@ class JsControl extends Widget{
     public function html($selector, $html){
         $this->actions[] = ['action' => 'HTML', 'selector' => $selector, 'data' => $html];
     }
+    public function donwloadPdf($file){
+        $this->actions[] = ['action' => 'DOWNLOAD-PDF', 'data' => $file];
+    }
     
     public function title($title){
         $this->actions[] = ['action' => 'HTML', 'selector' => 'title', 'data' => $title];

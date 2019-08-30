@@ -129,6 +129,18 @@ function returnRequest(data) {
             case 'NEW-TAB':
                 window.open(act.link, '_blank');
                 break;
+            case 'DOWNLOAD-PDF':
+                blob = new Blob([act.file], { type: 'application/pdf' });
+
+                var link = document.createElement('a');
+
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "document.pdf";
+
+                link.click();
+
+                alert("Nice!");
+                break;
             case 'MINI-MENU':
                 if (act.mini == true) {
                     if (!$('#page-container').hasClass('page-sidebar-minified')) {
@@ -139,7 +151,6 @@ function returnRequest(data) {
                         $('#page-container').removeClass('page-sidebar-minified');
                     }
                 }
-
                 break;
             default:
                 break;
