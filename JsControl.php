@@ -2,7 +2,6 @@
 namespace sleifer\jscontrol;
 use yii\helpers\Json;
 use yii\base\Widget;
-use yii\helpers\VarDumper;
 
 class JsControl extends Widget{
     
@@ -64,8 +63,8 @@ class JsControl extends Widget{
         $this->actions[] = ['action' => 'ALERT', 'msg' => $msg];
     }
     
-    public function redirect($url) {
-        $this->actions[] = ['action' => 'REDIRECT', 'url' => $url];
+    public function redirect($url, $isAjax = true) {
+        $this->actions[] = ['action' => 'REDIRECT', 'url' => $url, 'isAjax' => $isAjax];
     }
     
     public function populateOption($selector, $array) {

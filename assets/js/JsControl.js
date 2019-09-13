@@ -91,8 +91,13 @@ function returnRequest(data) {
                 $.gritter.add(act.params);
                 break;
             case 'REDIRECT':
-                window.history.pushState(act.url, $(document).attr('title'), act.url);
-                execAjax(act.url, {}, '#page-loader');
+                if (data.isAjax == true) {
+                    window.history.pushState(act.url, $(document).attr('title'), act.url);
+                    execAjax(act.url, {}, '#page-loader');
+                } else {
+                    window.location.href = act.url;
+                }
+
                 break;
             case 'REMOVE':
                 $(act.selector).remove();
