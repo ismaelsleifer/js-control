@@ -61,7 +61,6 @@ function returnRequest(data) {
                 if (typeof loadPlugins == 'function') {
                     loadPlugins();
                 }
-                console.log('dialog');
                 break;
             case 'OPEN-MODAL':
                 $('#modal .modal-title').html(act.title);
@@ -79,7 +78,6 @@ function returnRequest(data) {
                 if (typeof loadPlugins == 'function') {
                     loadPlugins();
                 }
-                console.log('modal');
                 break;
             case 'CLOSE-MODAL':
                 $('.modal').modal('hide');
@@ -193,7 +191,6 @@ function execAjax(url, data, loader, type, dataType, abort) {
             }
 
             if (textStatus == 'error') {
-                console.log(jqXHR);
                 if (jqXHR.statusText == "Internal Server Error") {
                     console.log("Página não encontrada ou fora do ar");
                 }
