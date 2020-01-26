@@ -2,6 +2,7 @@
 namespace sleifer\jscontrol;
 use yii\helpers\Json;
 use yii\base\Widget;
+use yii\helpers\VarDumper;
 
 class JsControl extends Widget{
     
@@ -111,6 +112,28 @@ class JsControl extends Widget{
         unset($this->actions[0]);
         $this->actions[0] = ['action' => 'MINI-MENU', 'mini' => $mini] ;
     }
+
+    public function infoError($model){
+        $erros = '';
+        foreach($model->errors as $key => $error){
+            foreach($error as $val){
+                $erros .= $key . ' - ' . $val;
+            }
+        }
+
+        $html = "
+            <div class='alert alert-danger m-b-0'>
+                <h5><i class='fa fa-info-circle'></i>Erro</h5>
+                {$erros}
+            </div>
+            <div class='modal-footer'>
+                <a href='javascript:;' class='btn btn-white' data-dismiss='modal'>Sair</a>
+            </div>
+        ";
+
+        $this->actions[] = ['action' => 'OPEN-MODAL', 'title' => 'Erro', 'data' => $html, 'size' => 0, 'type' => 'modal-sm'];
+
+	}
     
     public function clearAction(){
         $this->actions = [];
