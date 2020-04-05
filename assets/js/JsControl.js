@@ -17,6 +17,11 @@ function toBoolean(bool) {
     return false;
 }
 
+function getMaxZIndex() {
+    let date = Date.now();
+    return parseInt(date.toString().substr(4, 10));
+}
+
 /**
  * Controla os eventos dos botões de voltar do navegador
  */
@@ -46,6 +51,8 @@ function returnRequest(data) {
                 updateGrid(act.id, act.options);
                 break;
             case 'OPEN-DIALOG':
+
+                $('#dialog').css('zIndex', getMaxZIndex());
                 $('#dialog .modal-title').html(act.title);
                 $('#dialog .modal-body').html(act.data);
                 $('#dialog .modal-dialog').removeClass('modal-lg');
@@ -63,10 +70,15 @@ function returnRequest(data) {
                 }
                 break;
             case 'OPEN-MODAL':
+
+                $('#modal').css('zIndex', getMaxZIndex());
                 $('#modal .modal-title').html(act.title);
                 $('#modal .modal-body').html(act.data);
-
-                if (act.size != 0) {
+                $('#modal .modal-dialog').removeClass('modal-lg');
+                $('#modal .modal-dialog').removeClass('modal-sm');
+                if (act.type != '') {
+                    $('#modal .modal-dialog').addClass(act.type);
+                } else if (act.size != 0) {
                     $('#modal .modal-dialog').width(act.size);
                 }
 
@@ -179,6 +191,7 @@ function execAjax(url, data, loader, type, dataType, abort) {
         headers: { 'X-JSCONTROL': 'true' },
         beforeSend: function() {
             if (loader != 0) {
+                $(loader).css('zIndex', getMaxZIndex());
                 $(loader).removeClass('d-none hide');
             }
         },
