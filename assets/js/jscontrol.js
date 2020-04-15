@@ -154,7 +154,6 @@ function returnRequest(data) {
 
                 link.click();
 
-                //alert("Nice!");
                 break;
             case 'MINI-MENU':
                 if (act.mini == true) {
