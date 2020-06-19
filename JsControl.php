@@ -2,14 +2,19 @@
 namespace sleifer\jscontrol;
 use yii\helpers\Json;
 use yii\base\Widget;
-use yii\helpers\VarDumper;
 
 class JsControl extends Widget{
-    
+
     private static $js;
     private $bundle = null;
     private $actions = [['action' => 'MINI-MENU', 'mini' => 'false']];
     private $status = true;
+
+    // constante de posicionamento do gritter
+    const GRITTER_POSITION_BOTTOM_LEFT  = 'bottom-left';
+    const GRITTER_POSITION_BOTTOM_RIGHT = 'bottom-right';
+    const GRITTER_POSITION_TOP_RIGHT    = 'top-right'; // default
+    const GRITTER_POSITION_TOP_LEFT     = 'top-left';
     
     private function __construct(){
         $view = $this->getView();
@@ -19,8 +24,7 @@ class JsControl extends Widget{
     public function __clone(){}
     
     public function __wakeup(){}
-    
-    
+     
     public static function js()
     {
         if(self::$js === null){
@@ -110,7 +114,10 @@ class JsControl extends Widget{
     
     public function miniMenu($mini = true){
         unset($this->actions[0]);
-        $this->actions[0] = ['action' => 'MINI-MENU', 'mini' => $mini] ;
+
+        if(!IS_MOBILE){
+            $this->actions[0] = ['action' => 'MINI-MENU', 'mini' => $mini] ;
+        }
     }
 
     public function infoError($model){
@@ -141,18 +148,22 @@ class JsControl extends Widget{
     
     /**
      *
-     * parêmetro disponiveis para os params
+     * parametro disponiveis para os params
      * title, text, image, sticky, time, class_name
      *
+     * parametros disponiveis para o options
+     * position -> constant, 
+     * fade_in_speed -> int, 
+     * fade_out_speed -> int, 
+     * time -> int
      * @param string $text
      * @param string $title
      * @param array $params[]
      */
-    public function gritter($text, $title = null, $params = []) {
+    public function gritter($text, $title = null, $options = null) {
         $params['title'] = $title;
         $params['text']  = $text;
-        
-        $this->actions[] = ['action' => 'GRITTER', 'params' => $params];
+        $this->actions[] = ['action' => 'GRITTER', 'params' => $params, 'options' => $options];
     }
     
     public function send() {

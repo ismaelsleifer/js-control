@@ -98,6 +98,9 @@ function returnRequest(data) {
                 alert(act.msg);
                 break;
             case 'GRITTER':
+                if (act.options) {
+                    $.extend($.gritter.options, act.options);
+                }
                 $.gritter.add(act.params);
                 break;
             case 'REDIRECT':
@@ -195,13 +198,12 @@ function execAjax(url, data, loader, type, dataType, abort) {
             }
         },
         success: function(data) {
-            returnRequest(data)
+            returnRequest(data);
         },
         complete: function(jqXHR, textStatus) {
             if (loader != 0) {
                 $(loader).addClass('d-none hide');
             }
-
             if (textStatus == 'error') {
                 if (jqXHR.statusText == "Internal Server Error") {
                     console.log("Página não encontrada ou fora do ar");
