@@ -104,7 +104,7 @@ function returnRequest(data) {
                 $.gritter.add(act.params);
                 break;
             case 'REDIRECT':
-                if (data.isAjax == true) {
+                if (act.isAjax == true) {
                     window.history.pushState(act.url, $(document).attr('title'), act.url);
                     execAjax(act.url, {}, '#page-loader');
                 } else {
