@@ -269,15 +269,6 @@ function ajaxRequest(obj, eventName) {
         params = params.concat($('[data-jsc-param-add=' + obj.attr('data-jsc-add') + ']').serializeArray());
     }
 
-    if (obj.attr('data-jsc-params')) {
-        var data = obj.attr('data-jsc-params').split('&');
-        $.each(data, function(i, val) {
-            var param = val.split('=');
-            eval('t ={name:"' + param[0] + '", value:"' + param[1] + '"}')
-            params.push(t);
-        });
-    }
-
     if (eventName == 'blur' || eventName == 'change') {
         if (obj.val() == '' && obj.attr('data-jsc-empty') == undefined) {
             return;
@@ -288,7 +279,40 @@ function ajaxRequest(obj, eventName) {
         if (obj.attr('data-jsc-complements')) {
             params = params.concat($('[data-jsc-complement=' + obj.attr('data-jsc-complements') + ']').serializeArray());
         }
-        params.push({ name: 'value', value: obj.val() }, { name: 'name', value: obj.attr('name') });
+        let val = obj.val();
+        if (obj.attr('type') == 'checkbox') {
+            if (!obj.is(':checked')) {
+                let obj2 = $('input[type="hidden"][name="' + obj.attr('name') + '"]');
+                if (obj2 != undefined) {
+                    val = obj2.val();
+                }
+            }
+        }
+
+        params.push({ name: 'value', value: val }, { name: 'name', value: obj.attr('name') });
+
+        if (obj.get(0).nodeName == 'SELECT') {
+            let obj2 = $('#' + obj.attr('id') + ' option:selected')
+            if (obj2.attr('data-jsc-params')) {
+                var data = obj2.attr('data-jsc-params').split('&');
+                $.each(data, function(i, val) {
+                    var param = val.split('=');
+                    eval('t ={name:"' + param[0] + '", value:"' + param[1] + '"}')
+                    params.push(t);
+                });
+            }
+        }
+    }
+
+    console.log(obj.get(0).nodeName)
+
+    if (obj.attr('data-jsc-params')) {
+        var data = obj.attr('data-jsc-params').split('&');
+        $.each(data, function(i, val) {
+            var param = val.split('=');
+            eval('t ={name:"' + param[0] + '", value:"' + param[1] + '"}')
+            params.push(t);
+        });
     }
 
     if (obj.attr('data-jsc-checkbox-grid')) {

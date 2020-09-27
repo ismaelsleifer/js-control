@@ -140,7 +140,17 @@ class JsControl extends Widget{
 
         $this->actions[] = ['action' => 'OPEN-MODAL', 'title' => 'Erro', 'data' => $html, 'size' => 0, 'type' => 'modal-sm'];
 
-	}
+    }
+    
+    public static function paramsFormat($params){
+        $data = '';
+        $sep = '';
+        foreach($params as $key => $val){
+            $data .= $sep . $key . '=' . $val;
+            $sep = '&';
+        }
+        return $data;
+    }
     
     public function clearAction(){
         $this->actions = [];
