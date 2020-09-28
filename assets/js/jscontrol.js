@@ -232,6 +232,17 @@ $(eventsList).each(function(i, eventName) {
     });
 });
 
+function parseQueryString(url) {
+    url = url.split('?');
+    let data = url.length > 1 ? url[1].split('&') : url[0].split('&');;
+    let params = [];
+    $.each(data, function(i, val) {
+        let param = val.split('=');
+        params.push({ name: param[0], value: param[1] });
+        //params[param[0]] = param[1];
+    });
+    return params;
+}
 
 function ajaxRequest(obj, eventName) {
     var url = null;
@@ -270,17 +281,23 @@ function ajaxRequest(obj, eventName) {
     }
 
     if (eventName == 'blur' || eventName == 'change') {
+
+        let type = obj.get(0).type;
+
         if (obj.val() == '' && obj.attr('data-jsc-empty') == undefined) {
             return;
         }
+
         if (obj.hasClass('ui-autocomplete-input')) {
             params = params.concat($('#' + obj.attr('id') + '-hidden').serializeArray());
         }
+
         if (obj.attr('data-jsc-complements')) {
             params = params.concat($('[data-jsc-complement=' + obj.attr('data-jsc-complements') + ']').serializeArray());
         }
+
         let val = obj.val();
-        if (obj.attr('type') == 'checkbox') {
+        if (type == 'checkbox') {
             if (!obj.is(':checked')) {
                 let obj2 = $('input[type="hidden"][name="' + obj.attr('name') + '"]');
                 if (obj2 != undefined) {
@@ -291,27 +308,19 @@ function ajaxRequest(obj, eventName) {
 
         params.push({ name: 'value', value: val }, { name: 'name', value: obj.attr('name') });
 
-        if (obj.get(0).nodeName == 'SELECT') {
+        if (type == 'select-one') {
             let obj2 = $('#' + obj.attr('id') + ' option:selected')
             if (obj2.attr('data-jsc-params')) {
-                var data = obj2.attr('data-jsc-params').split('&');
-                $.each(data, function(i, val) {
-                    var param = val.split('=');
-                    eval('t ={name:"' + param[0] + '", value:"' + param[1] + '"}')
-                    params.push(t);
+                $.each(parseQueryString(obj2.attr('data-jsc-params')), function(i, val) {
+                    params.push(val);
                 });
             }
         }
     }
 
-    console.log(obj.get(0).nodeName)
-
     if (obj.attr('data-jsc-params')) {
-        var data = obj.attr('data-jsc-params').split('&');
-        $.each(data, function(i, val) {
-            var param = val.split('=');
-            eval('t ={name:"' + param[0] + '", value:"' + param[1] + '"}')
-            params.push(t);
+        $.each(parseQueryString(obj.attr('data-jsc-params')), function(i, val) {
+            params.push(val);
         });
     }
 
