@@ -142,7 +142,7 @@ class JsControl extends Widget{
 
     }
     
-    public static function paramsFormat($params){
+    public static function parseQueryString($params){
         $data = '';
         $sep = '';
         foreach($params as $key => $val){
