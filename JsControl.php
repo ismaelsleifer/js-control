@@ -51,6 +51,10 @@ class JsControl extends Widget{
     public function attr($selector, $val){
         $this->actions[] = ['action' => 'ATTR', 'selector' => $selector, 'data' => $val];
     }
+
+    public function checkbox($selector, $val){
+        $this->actions[] = ['action' => 'CHECKBOX', 'selector' => $selector, 'data' => $val];
+    }
     
     public function modal($title, $html, $size = 500, $type = cDialog::cDefault){
         $this->actions[] = ['action' => 'OPEN-MODAL', 'title' => $title, 'data' => $html, 'size' => $size, 'type' => $type];

@@ -47,6 +47,9 @@ function returnRequest(data) {
             case 'ATTR':
                 $(act.selector).attr(act.data);
                 break;
+            case 'CHECKBOX':
+                $(act.selector).prop('checked', act.data);
+                break;
             case 'UPDATEGRID':
                 updateGrid(act.id, act.options);
                 break;
