@@ -54,7 +54,6 @@ function returnRequest(data) {
                 updateGrid(act.id, act.options);
                 break;
             case 'OPEN-DIALOG':
-
                 $('#dialog').css('zIndex', getMaxZIndex());
                 $('#dialog .modal-title').html(act.title);
                 $('#dialog .modal-body').html(act.data);
@@ -73,7 +72,6 @@ function returnRequest(data) {
                 }
                 break;
             case 'OPEN-MODAL':
-
                 $('#modal').css('zIndex', getMaxZIndex());
                 $('#modal .modal-title').html(act.title);
                 $('#modal .modal-body').html(act.data);
@@ -172,6 +170,14 @@ function returnRequest(data) {
                     }
                 }
                 break;
+            case 'SWEET-ALERT':
+                if (act.urlButtonConfirm) {
+                    act.params['preConfirm'] = () => {
+                        execAjax(act.urlButtonConfirm, act.data)
+                    }
+                }
+                swal.fire(act.params);
+                break;
             default:
                 break;
         }
@@ -242,7 +248,6 @@ function parseQueryString(url) {
     $.each(data, function(i, val) {
         let param = val.split('=');
         params.push({ name: param[0], value: param[1] });
-        //params[param[0]] = param[1];
     });
     return params;
 }
@@ -252,12 +257,6 @@ function ajaxRequest(obj, eventName) {
     var params = [];
     var loader = '#page-loader';
     var method = 'post';
-
-    if (obj.attr('data-jsc-confirm')) {
-        if (!confirm(obj.attr('data-jsc-confirm'))) {
-            return;
-        }
-    }
 
     if (obj.attr('data-jsc-sendformfield')) {
         var form = obj.closest('form');
@@ -332,6 +331,35 @@ function ajaxRequest(obj, eventName) {
         $(keys).each(function(i, key) {
             params.push({ name: 'checkbox-grid[]', value: key });
         });
+    }
+
+    if (obj.attr('data-jsc-confirm')) {
+        Swal.fire({
+            text: obj.attr('data-jsc-confirm'),
+            confirmButtonText: 'Sim',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Não',
+            focusCancel: true,
+            icon: 'question'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (obj.attr('data-jsc-pushState') != 0) {
+                    window.history.pushState(url, $(document).attr('title'), url);
+                }
+
+                if (obj.attr('data-jsc-loader')) {
+                    loader = obj.attr('data-jsc-loader');
+                }
+
+                var abort = true;
+                if (obj.attr('data-jsc-ajax-abort')) {
+                    abort = obj.attr('data-jsc-ajax-abort');
+                }
+                execAjax(url, params, loader, method, 'json', abort);
+            }
+        });
+        return false;
     }
 
     if (obj.attr('data-jsc-pushState') != 0) {

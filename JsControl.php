@@ -143,7 +143,28 @@ class JsControl extends Widget{
         ";
 
         $this->actions[] = ['action' => 'OPEN-MODAL', 'title' => 'Erro', 'data' => $html, 'size' => 0, 'type' => 'modal-sm'];
+    }
 
+    /**
+     * Opções simples, para outra verificar o manual da lib
+     * 
+     * @api https://sweetalert2.github.io/#configuration
+     * 
+     * [
+     *      'title' => 'Titulo',
+     *      'text' => 'Texto',
+     *      'icon' => cSweetAlert::cSuccess,
+     *      'showCancelButton' => true,
+     *      'showCancelButton' => true,
+     *      'cancelButtonText' => 'Cancelar',
+     *      'confirmButtonText' => 'Salvar'
+     * ]
+     * 
+     */
+
+
+    public function sweetAlert($params, $urlButtonConfirm = null, $data = null){
+        $this->actions[] = ['action' => 'SWEET-ALERT', 'params' => $params, 'urlButtonConfirm' => $urlButtonConfirm, 'data' => $data];
     }
     
     public static function parseQueryString($params){
