@@ -341,7 +341,10 @@ function ajaxRequest(obj, eventName) {
             cancelButtonColor: '#d33',
             cancelButtonText: 'Não',
             focusCancel: true,
-            icon: 'question'
+            icon: 'question',
+            willOpen: function() {
+                $('.swal2-container').css('zIndex', getMaxZIndex());
+            }
         }).then((result) => {
             if (result.isConfirmed) {
                 if (obj.attr('data-jsc-pushState') != 0) {
@@ -357,9 +360,11 @@ function ajaxRequest(obj, eventName) {
                     abort = obj.attr('data-jsc-ajax-abort');
                 }
                 execAjax(url, params, loader, method, 'json', abort);
+            } else {
+                return false;
             }
         });
-        return false;
+        return;
     }
 
     if (obj.attr('data-jsc-pushState') != 0) {
