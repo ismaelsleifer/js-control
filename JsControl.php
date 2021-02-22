@@ -115,6 +115,10 @@ class JsControl extends Widget{
     public function newTab($link){
         $this->actions[] = ['action' => 'NEW-TAB', 'link' => $link];
     }
+
+    public function execEvent($selector, $type){
+        $this->actions[] = ['action' => 'EXEC-EVENT', 'selector' => $selector, 'type' => $type];
+    }
     
     public function miniMenu($mini = true){
         unset($this->actions[0]);

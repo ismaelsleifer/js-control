@@ -111,7 +111,6 @@ function returnRequest(data) {
                 } else {
                     window.location.href = act.url;
                 }
-
                 break;
             case 'REMOVE':
                 $(act.selector).remove();
@@ -150,14 +149,10 @@ function returnRequest(data) {
                 break;
             case 'DOWNLOAD-PDF':
                 blob = new Blob([act.file], { type: 'application/pdf' });
-
                 var link = document.createElement('a');
-
                 link.href = window.URL.createObjectURL(blob);
                 link.download = "document.pdf";
-
                 link.click();
-
                 break;
             case 'MINI-MENU':
                 if (act.mini == true) {
@@ -177,6 +172,17 @@ function returnRequest(data) {
                     }
                 }
                 swal.fire(act.params);
+                break;
+            case 'EXEC-EVENT':
+                if (act.type == 'click') {
+                    $(act.selector).click();
+                }else if(act.type == 'change'){
+                    $(act.selector).change();
+                }else if(act.type == 'blur'){
+                    $(act.selector).blur();
+                }else if(act.type == 'focus'){
+                    $(act.selector).blur();
+                }
                 break;
             default:
                 break;
