@@ -9,6 +9,7 @@ class JsControl extends Widget{
     private $bundle = null;
     private $actions = [['action' => 'MINI-MENU', 'mini' => 'false']];
     private $status = true;
+    private $x_jscontrol = true;
 
     // constante de posicionamento do gritter
     const GRITTER_POSITION_BOTTOM_LEFT  = 'bottom-left';
@@ -25,8 +26,7 @@ class JsControl extends Widget{
     
     public function __wakeup(){}
      
-    public static function js()
-    {
+    public static function js(){
         if(self::$js === null){
             self::$js = new self;
         }
@@ -171,6 +171,11 @@ class JsControl extends Widget{
         $this->actions[] = ['action' => 'SWEET-ALERT', 'params' => $params, 'urlButtonConfirm' => $urlButtonConfirm, 'data' => $data];
     }
     
+    public function XJscontrol($status = true){
+        $this->x_jscontrol = $status;
+    }
+
+
     public static function parseQueryString($params){
         $data = '';
         $sep = '';
@@ -207,7 +212,7 @@ class JsControl extends Widget{
     
     public function send() {
         $rq = \Yii::$app->request;
-        if(count($this->actions) > 0 && $rq->headers->has('X-JSCONTROL')){
+        if(count($this->actions) > 0 && ($rq->headers->has('X-JSCONTROL') || !$this->x_jscontrol)){
             echo Json::encode(['actions' => $this->actions, 'success' => $this->status]);
         }
         exit;

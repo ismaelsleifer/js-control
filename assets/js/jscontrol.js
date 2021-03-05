@@ -30,6 +30,7 @@ window.onpopstate = function(event) {
 }
 
 function returnRequest(data) {
+    console.log(data);
     $.each(data.actions, function(i, act) {
         switch (act.action) {
             case 'HTML':
