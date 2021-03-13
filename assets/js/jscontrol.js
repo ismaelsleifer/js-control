@@ -173,15 +173,16 @@ function returnRequest(data) {
                     }
                 }
                 swal.fire(act.params);
+                $('.swal2-container').css('zIndex', getMaxZIndex());
                 break;
             case 'EXEC-EVENT':
                 if (act.type == 'click') {
                     $(act.selector).click();
-                }else if(act.type == 'change'){
+                } else if (act.type == 'change') {
                     $(act.selector).change();
-                }else if(act.type == 'blur'){
+                } else if (act.type == 'blur') {
                     $(act.selector).blur();
-                }else if(act.type == 'focus'){
+                } else if (act.type == 'focus') {
                     $(act.selector).blur();
                 }
                 break;
