@@ -30,7 +30,6 @@ window.onpopstate = function(event) {
 }
 
 function returnRequest(data) {
-    console.log(data);
     $.each(data.actions, function(i, act) {
         switch (act.action) {
             case 'HTML':
@@ -107,7 +106,9 @@ function returnRequest(data) {
                 break;
             case 'REDIRECT':
                 if (act.isAjax == true) {
-                    window.history.pushState(act.url, $(document).attr('title'), act.url);
+                    if (act.pushstate == true) {
+                        window.history.pushState(act.url, $(document).attr('title'), act.url);
+                    }
                     execAjax(act.url, {}, '#page-loader');
                 } else {
                     window.location.href = act.url;
@@ -183,7 +184,7 @@ function returnRequest(data) {
                 } else if (act.type == 'blur') {
                     $(act.selector).blur();
                 } else if (act.type == 'focus') {
-                    $(act.selector).blur();
+                    $(act.selector).focus();
                 }
                 break;
             default:
