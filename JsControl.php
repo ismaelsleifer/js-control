@@ -104,6 +104,10 @@ class JsControl extends Widget{
     public function addErros($formName, $errors){
         $this->actions[] = ['action' => 'ADD-ERRORS', 'formName' => $formName, 'errors' => $errors];
     }
+
+    public function clearError($formName, $attribute){
+        $this->actions[] = ['action' => 'CLEAR-ERROR', 'formName' => $formName, 'attr' => $attribute];
+    }
     
     public function removeClass($selector, $className){
         $this->actions[] = ['action' => 'REMOVE-CLASS', 'selector' => $selector, 'className' => $className];

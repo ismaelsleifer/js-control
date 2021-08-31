@@ -8,6 +8,6 @@ class cSweetAlert {
     const cError      = 'error';
     const cWarning    = 'warning';
     const cInfo       = 'info';
-    const cQuestion       = 'question';
+    const cQuestion   = 'question';
         
 }

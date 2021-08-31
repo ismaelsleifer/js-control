@@ -140,6 +140,11 @@ function returnRequest(data) {
                     element.addClass('has-error');
                 });
                 break;
+            case 'CLEAR-ERROR':
+                var element = $('.field-' + act.formName.toLowerCase() + '-' + act.attr);
+                element.find('.help-block').html("");
+                element.removeClass('has-error');
+                break;
             case 'REMOVE-CLASS':
                 $(act.selector).removeClass(act.className);
                 break;
