@@ -7,7 +7,7 @@ use \yii\web\AssetBundle;
 /**
  * @author Ismael Sleifer <ismaelsleifer@gmail.com>
  */
-class ActiveAssets extends AssetBundle
+class JsControlAssets extends AssetBundle
 {
 	public $sourcePath = '@sleifer/jscontrol/assets';
 
@@ -16,7 +16,7 @@ class ActiveAssets extends AssetBundle
 	];
 
 	public $depends = [
-		'yii\web\JqueryAsset',
+		//'yii\web\JqueryAsset',
 	];
 
 	public $css = [

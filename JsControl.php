@@ -1,14 +1,13 @@
 <?php
 namespace sleifer\jscontrol;
 
-use common\constants\cDataBase;
 use yii\helpers\Json;
 use yii\base\Widget;
 
 class JsControl extends Widget{
 
     private static $js;
-    private $bundle = null;
+    //private $bundle = null;
     private $actions = [['action' => 'MINI-MENU', 'mini' => 'false']];
     private $status = true;
     private $x_jscontrol = true;
@@ -19,10 +18,10 @@ class JsControl extends Widget{
     const GRITTER_POSITION_TOP_RIGHT    = 'top-right'; // default
     const GRITTER_POSITION_TOP_LEFT     = 'top-left';
     
-    private function __construct(){
-        $view = $this->getView();
-        $this->bundle = ActiveAssets::register($view);
-    }
+    // private function __construct(){
+    //     $view = $this->getView();
+    //     $this->bundle = ActiveAssets::register($view);
+    // }
     
     public function __clone(){}
     
