@@ -5,6 +5,7 @@
  */
 
 var xhr = $.ajax();
+var control = false;
 
 /**
  * Convert uma string "false" ou "true" para boolean
@@ -232,11 +233,13 @@ function execAjax(url, data, loader, type, dataType, abort) {
                     console.log("Página não encontrada ou fora do ar");
                 }
             }
+            control = false;
         },
         error: function(jqXHR, textStatus, errorThrown) {
             if (textStatus === 'parsererror') {
                 console.log('Retorno de dados invalido verifique se o retorno e do tipo json');
             }
+            control = false;
         }
     });
 }
@@ -267,13 +270,23 @@ function parseQueryString(url) {
 }
 
 function ajaxRequest(obj, eventName) {
-    var url = null;
-    var params = [];
-    var loader = '#page-loader';
-    var method = 'post';
+    let url = null;
+    let params = [];
+    let loader = '#page-loader';
+    let method = 'post';
+
+    //usado para evitar duplo clic no submit do forme
+    let submit = obj.find("[type='submit']")
+    if(submit.length > 0){
+        if(control == true){
+            return;
+        }else{
+            control = true;
+        }
+    }
 
     if (obj.attr('data-jsc-sendformfield')) {
-        var form = obj.closest('form');
+        let form = obj.closest('form');
         params = form.serializeArray();
     }
 
@@ -369,7 +382,7 @@ function ajaxRequest(obj, eventName) {
                     loader = obj.attr('data-jsc-loader');
                 }
 
-                var abort = true;
+                let abort = true;
                 if (obj.attr('data-jsc-ajax-abort')) {
                     abort = obj.attr('data-jsc-ajax-abort');
                 }
@@ -389,7 +402,7 @@ function ajaxRequest(obj, eventName) {
         loader = obj.attr('data-jsc-loader');
     }
 
-    var abort = true;
+    let abort = true;
     if (obj.attr('data-jsc-ajax-abort')) {
         abort = obj.attr('data-jsc-ajax-abort');
     }
