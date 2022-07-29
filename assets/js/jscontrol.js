@@ -108,7 +108,7 @@ function returnRequest(data) {
             case 'REDIRECT':
                 if (act.isAjax == true) {
                     if (act.pushstate == true) {
-                        window.history.pushState(act.url, $(document).attr('title'), act.url);
+                        window.history.pushstate(act.url, $(document).attr('title'), act.url);
                     }
                     execAjax(act.url, {}, '#page-loader');
                 } else {
@@ -216,7 +216,7 @@ function execAjax(url, data, loader, type, dataType, abort) {
         dataType: dataType,
         headers: { 'X-JSCONTROL': 'true' },
         beforeSend: function() {
-            if (loader != 0) {
+            if (loader != 'false') {
                 $(loader).css('zIndex', getMaxZIndex());
                 $(loader).removeClass('d-none hide');
             }
@@ -225,7 +225,7 @@ function execAjax(url, data, loader, type, dataType, abort) {
             returnRequest(data);
         },
         complete: function(jqXHR, textStatus) {
-            if (loader != 0) {
+            if (loader != 'false') {
                 $(loader).addClass('d-none hide');
             }
             if (textStatus == 'error') {
@@ -374,7 +374,7 @@ function ajaxRequest(obj, eventName) {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                if (obj.attr('data-jsc-pushState') != 0) {
+                if (obj.attr('data-jsc-pushstate') != 'false') {
                     window.history.pushState(url, $(document).attr('title'), url);
                 }
 
@@ -394,7 +394,7 @@ function ajaxRequest(obj, eventName) {
         return;
     }
 
-    if (obj.attr('data-jsc-pushState') != 0) {
+    if (obj.attr('data-jsc-pushstate') != 'false') {
         window.history.pushState(url, $(document).attr('title'), url);
     }
 
