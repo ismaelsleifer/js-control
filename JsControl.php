@@ -3,6 +3,7 @@ namespace sleifer\jscontrol;
 
 use yii\helpers\Json;
 use yii\base\Widget;
+use yii\helpers\VarDumper;
 
 class JsControl extends Widget{
 
@@ -101,7 +102,7 @@ class JsControl extends Widget{
         $this->actions[] = ['action' => 'EXEC-FUNCTION', 'name' => $name];
     }
     
-    public function addErros($formName, $errors){
+    public function addErrors($formName, $errors){
         $this->actions[] = ['action' => 'ADD-ERRORS', 'formName' => $formName, 'errors' => $errors];
     }
 
