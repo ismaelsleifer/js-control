@@ -3,7 +3,6 @@ namespace sleifer\jscontrol;
 
 use yii\helpers\Json;
 use yii\base\Widget;
-use yii\helpers\VarDumper;
 
 class JsControl extends Widget{
 
