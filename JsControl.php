@@ -33,42 +33,73 @@ class JsControl extends Widget{
         }
         return self::$js;
     }
-    
+    /**
+     * Modifica o elemento interno da tag <div>{AQUI}</div>
+     */
     public function html($selector, $html){
         $this->actions[] = ['action' => 'HTML', 'selector' => $selector, 'data' => $html];
     }
+
     public function donwloadPdf($file){
         $this->actions[] = ['action' => 'DOWNLOAD-PDF', 'data' => $file];
     }
     
+    /**
+     * Modifica o titulo da pagina
+     */
     public function title($title){
         $this->actions[] = ['action' => 'HTML', 'selector' => 'title', 'data' => $title];
     }
     
+    /**
+     * Altera o value do input
+     */
     public function val($selector, $val){
         $this->actions[] = ['action' => 'VAL', 'selector' => $selector, 'data' => $val];
     }
     
+    /**
+     * Adiciona um atributo ao elemento
+     */
     public function attr($selector, $val){
         $this->actions[] = ['action' => 'ATTR', 'selector' => $selector, 'data' => $val];
+    }
+
+    /**
+     * Remove um atributo ao elemento
+     */
+    public function removeAttr($selector, $attribute){
+        $this->actions[] = ['action' => 'REMOVE_ATTR', 'selector' => $selector, 'data' => $attribute];
     }
 
     public function checkbox($selector, $val){
         $this->actions[] = ['action' => 'CHECKBOX', 'selector' => $selector, 'data' => $val];
     }
     
+    /**
+     * Abre uma tela em modelo modal 
+     */
     public function modal($title, $html, $size = 500, $type = cDialog::cDefault){
         $this->actions[] = ['action' => 'OPEN-MODAL', 'title' => $title, 'data' => $html, 'size' => $size, 'type' => $type];
     }
     
+    /**
+     * Abre uma tela em modelo Dialog
+     */
     public function dialog($title, $html,  $type = cDialog::cDefault){
         $this->actions[] = ['action' => 'OPEN-DIALOG', 'title' => $title, 'data' => $html, 'type' => $type];
     }
     
+    /**
+     * fecha todos os dialogs ou modais abertos
+     */
     public function closeDialog(){
         $this->actions[] = ['action' => 'CLOSE-MODAL'];
     }
     
+    /**
+     * gera um alert na tela
+     */
     public function alert($msg) {
         $this->actions[] = ['action' => 'ALERT', 'msg' => $msg];
     }

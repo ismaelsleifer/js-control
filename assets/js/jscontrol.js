@@ -48,6 +48,9 @@ function returnRequest(data) {
             case 'ATTR':
                 $(act.selector).attr(act.data);
                 break;
+            case 'REMOVE_ATTR':
+                $(act.selector).removeAttr(act.data);
+                break;
             case 'CHECKBOX':
                 $(act.selector).prop('checked', act.data);
                 break;
@@ -108,7 +111,7 @@ function returnRequest(data) {
             case 'REDIRECT':
                 if (act.isAjax == true) {
                     if (act.pushstate == true) {
-                        window.history.pushstate(act.url, $(document).attr('title'), act.url);
+                        window.history.pushState(act.url, $(document).attr('title'), act.url);
                     }
                     execAjax(act.url, {}, '#page-loader');
                 } else {
