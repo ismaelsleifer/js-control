@@ -63,10 +63,11 @@ function returnRequest(data) {
                 $('#dialog .modal-body').html(act.data);
                 $('#dialog .modal-dialog').removeClass('modal-lg');
                 $('#dialog .modal-dialog').removeClass('modal-sm');
+
                 if (act.type != '') {
                     $('#dialog .modal-dialog').addClass(act.type);
                 } else if (act.size != 0) {
-                    $('#dialog .modal-dialog').width(act.size);
+                    $('#dialog .modal-dialog .modal-content').width(act.size);
                 }
 
                 $('#dialog').modal();
@@ -81,6 +82,7 @@ function returnRequest(data) {
                 $('#modal .modal-body').html(act.data);
                 $('#modal .modal-dialog').removeClass('modal-lg');
                 $('#modal .modal-dialog').removeClass('modal-sm');
+
                 if (act.type != '') {
                     $('#modal .modal-dialog').addClass(act.type);
                 } else if (act.size != 0) {
