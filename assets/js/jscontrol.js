@@ -83,7 +83,9 @@ function returnRequest(data) {
 
                 if (act.type != '') {
                     $('#modal .modal-dialog').addClass(act.type);
-                } 
+                } else if (act.size != 0) {
+                    $('#modal .modal-dialog').width(act.size);
+                }
 
                 $('#modal').modal({
                     'backdrop': false,
