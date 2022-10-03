@@ -19,8 +19,8 @@ function toBoolean(bool) {
 }
 
 function getMaxZIndex() {
-    let date = Date.now();
-    return parseInt(date.toString().substr(4, 10));
+    let date = Date.now().toString();
+    return parseInt(date.substring(4, date.length));
 }
 
 /**
@@ -66,8 +66,6 @@ function returnRequest(data) {
 
                 if (act.type != '') {
                     $('#dialog .modal-dialog').addClass(act.type);
-                } else if (act.size != 0) {
-                    $('#dialog .modal-dialog .modal-content').width(act.size);
                 }
 
                 $('#dialog').modal();
@@ -85,9 +83,7 @@ function returnRequest(data) {
 
                 if (act.type != '') {
                     $('#modal .modal-dialog').addClass(act.type);
-                } else if (act.size != 0) {
-                    $('#modal .modal-dialog').width(act.size);
-                }
+                } 
 
                 $('#modal').modal({
                     'backdrop': false,
@@ -210,9 +206,7 @@ function execAjax(url, data, loader, type, dataType, abort) {
     dataType = dataType !== undefined ? dataType : 'json';
     abort = toBoolean(abort);
 
-    if (abort) {
-        xhr.abort();
-    }
+    abort ? xhr.abort() : null;
 
     xhr = $.ajax({
         type: type,
@@ -249,12 +243,7 @@ function execAjax(url, data, loader, type, dataType, abort) {
     });
 }
 
-var eventsList = [
-    'click',
-    'blur',
-    'change',
-    'submit'
-];
+var eventsList = ['click', 'blur', 'change', 'submit'];
 
 $(eventsList).each(function(i, eventName) {
     $(document).on(eventName, '[data-jsc-event="' + eventName + '"]', function(e) {
