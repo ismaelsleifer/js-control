@@ -86,7 +86,7 @@ class JsControl extends Widget{
     /**
      * Abre uma tela em modelo Dialog
      */
-    public function dialog($title, $html, $type = cDialog::cDefault, $size = 500){
+    public function dialog($title, $html, $type = cDialog::cDefault){
         $this->actions[] = ['action' => 'OPEN-DIALOG', 'title' => $title, 'data' => $html, 'type' => $type, 'size' => $size];
     }
     
