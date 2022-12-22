@@ -1,6 +1,7 @@
 <?php
 namespace sleifer\jscontrol;
 
+use Yii;
 use yii\helpers\Json;
 use yii\base\Widget;
 
@@ -37,75 +38,87 @@ class JsControl extends Widget{
      * Modifica o elemento interno da tag <div>{AQUI}</div>
      */
     public function html($selector, $html){
-        $this->actions[] = ['action' => 'HTML', 'selector' => $selector, 'data' => $html];
+        $this->addAction('HTML', ['selector' => $selector, 'data' => $html]);
     }
 
     public function donwloadPdf($file){
-        $this->actions[] = ['action' => 'DOWNLOAD-PDF', 'data' => $file];
+        $this->addAction('DOWNLOAD-PDF', ['data' => $file]);
     }
     
     /**
      * Modifica o titulo da pagina
      */
     public function title($title){
-        $this->actions[] = ['action' => 'HTML', 'selector' => 'title', 'data' => $title];
+        $this->addAction('HTML', ['selector' => 'title', 'data' => $title]);
     }
     
     /**
      * Altera o value do input
      */
     public function val($selector, $val){
-        $this->actions[] = ['action' => 'VAL', 'selector' => $selector, 'data' => $val];
+        $this->addAction('VAL', ['selector' => $selector, 'data' => $val]);
     }
     
     /**
      * Adiciona um atributo ao elemento
      */
     public function attr($selector, $val){
-        $this->actions[] = ['action' => 'ATTR', 'selector' => $selector, 'data' => $val];
+        $this->addAction('ATTR', ['selector' => $selector, 'data' => $val]);
     }
 
     /**
      * Remove um atributo ao elemento
      */
     public function removeAttr($selector, $attribute){
-        $this->actions[] = ['action' => 'REMOVE_ATTR', 'selector' => $selector, 'data' => $attribute];
+        $this->addAction('REMOVE_ATTR', ['selector' => $selector, 'data' => $attribute]);
     }
 
     public function checkbox($selector, $val){
-        $this->actions[] = ['action' => 'CHECKBOX', 'selector' => $selector, 'data' => $val];
+        $this->addAction('CHECKBOX', ['selector' => $selector, 'data' => $val]);
     }
     
     /**
      * Abre uma tela em modelo modal 
      */
     public function modal($title, $html, $size = 500, $type = cDialog::cDefault){
-        $this->actions[] = ['action' => 'OPEN-MODAL', 'title' => $title, 'data' => $html, 'size' => $size, 'type' => $type];
+        $this->addAction('OPEN-MODAL', ['title' => $title, 'data' => $html, 'size' => $size, 'type' => $type]);
     }
     
     /**
      * Abre uma tela em modelo Dialog
      */
     public function dialog($title, $html, $type = cDialog::cDefault){
-        $this->actions[] = ['action' => 'OPEN-DIALOG', 'title' => $title, 'data' => $html, 'type' => $type];
+        $this->addAction('OPEN-DIALOG', ['title' => $title, 'data' => $html, 'type' => $type]);
+    }
+    /**
+     * inseri na tela um modal que foi criado no backend
+     */
+    public function createModal($id, $html){
+        $html = "<div id='{$id}'>{$html}</div>";
+        $this->addAction('CREATE-MODAL', ['data' => $html, 'id' => $id]);
     }
     
     /**
      * fecha todos os dialogs ou modais abertos
      */
     public function closeDialog(){
+        $this->addAction('CLOSE-MODAL');
         $this->actions[] = ['action' => 'CLOSE-MODAL'];
+    }
+
+    public function closeModal($selector = '.modal'){
+        $this->addAction('CLOSE-MODAL', ['selector' => $selector]);
     }
     
     /**
      * gera um alert na tela
      */
     public function alert($msg) {
-        $this->actions[] = ['action' => 'ALERT', 'msg' => $msg];
+        $this->addAction('ALERT', ['msg' => $msg]);
     }
     
     public function redirect($url, $isAjax = true, $pushstate = true) {
-        $this->actions[] = ['action' => 'REDIRECT', 'url' => $url, 'isAjax' => $isAjax, 'pushstate' => $pushstate];
+        $this->addAction('REDIRECT', ['url' => $url, 'isAjax' => $isAjax, 'pushstate' => $pushstate]);
     }
     
     public function populateOption($selector, $array) {
@@ -113,47 +126,55 @@ class JsControl extends Widget{
         foreach($array as $key => $value){
             $options .= "<option value='{$key}'>{$value}</option>";
         }
-        $this->actions[] = ['action' => 'OPTION', 'selector' => $selector, 'data' => $options];
+        $this->addAction('OPTION', ['selector' => $selector, 'data' => $options]);
     }
     
     public function updateGrid($id, $options = null) {
-        $this->actions[] = ['action' => 'UPDATEGRID', 'id' => $id, 'options' => $options];
+        $this->addAction('UPDATEGRID', ['id' => $id, 'options' => $options]);
     }
     
     public function remove($selector){
-        $this->actions[] = ['action' => 'REMOVE', 'selector' => $selector];
+        $this->addAction('REMOVE', ['selector' => $selector]);
     }
     
     public function removeDataGrid($grid, $id){
-        $this->actions[] = ['action' => 'REMOVEDATAGRID', 'grid' => $grid, 'id' => $id];
+        $this->addAction('REMOVEDATAGRID', ['grid' => $grid, 'id' => $id]);
     }
     
     public function execFunction($name){
-        $this->actions[] = ['action' => 'EXEC-FUNCTION', 'name' => $name];
+        $this->addAction('EXEC-FUNCTION', ['name' => $name]);
     }
     
     public function addErrors($formName, $errors){
-        $this->actions[] = ['action' => 'ADD-ERRORS', 'formName' => $formName, 'errors' => $errors];
+        $this->addAction('ADD-ERRORS', ['formName' => $formName, 'errors' => $errors]);
     }
 
     public function clearError($formName, $attribute){
-        $this->actions[] = ['action' => 'CLEAR-ERROR', 'formName' => $formName, 'attr' => $attribute];
+        $this->addAction('CLEAR-ERROR', ['formName' => $formName, 'attr' => $attribute]);
     }
     
     public function removeClass($selector, $className){
-        $this->actions[] = ['action' => 'REMOVE-CLASS', 'selector' => $selector, 'className' => $className];
+        $this->addAction('REMOVE-CLASS', ['selector' => $selector, 'className' => $className]);
     }
     
     public function addClass($selector, $className){
-        $this->actions[] = ['action' => 'ADD-CLASS', 'selector' => $selector, 'className' => $className];
+        $this->addAction('ADD-CLASS', ['selector' => $selector, 'className' => $className]);
     }
     
     public function newTab($link){
-        $this->actions[] = ['action' => 'NEW-TAB', 'link' => $link];
+        $this->addAction('NEW-TAB', ['link' => $link]);
     }
 
     public function execEvent($selector, $type){
-        $this->actions[] = ['action' => 'EXEC-EVENT', 'selector' => $selector, 'type' => $type];
+        $this->addAction('EXEC-EVENT', ['selector' => $selector, 'type' => $type]);
+    }
+
+    public function append($selector, $data){
+        $this->addAction('APPEND', ['selector' => $selector, 'data' => $data]);
+    }
+
+    public function prepend($selector, $data){
+        $this->addAction('PREPEND', ['selector' => $selector, 'data' => $data]);
     }
     
     public function miniMenu($mini = true){
@@ -182,7 +203,7 @@ class JsControl extends Widget{
             </div>
         ";
 
-        $this->actions[] = ['action' => 'OPEN-MODAL', 'title' => 'Erro', 'data' => $html, 'size' => 0, 'type' => 'modal-sm'];
+        $this->addAction('OPEN-MODAL', ['title' => 'Erro', 'data' => $html, 'size' => 0, 'type' => 'modal-sm']);
     }
 
     /**
@@ -201,10 +222,8 @@ class JsControl extends Widget{
      * ]
      * 
      */
-
-
     public function sweetAlert($params, $urlButtonConfirm = null, $data = null){
-        $this->actions[] = ['action' => 'SWEET-ALERT', 'params' => $params, 'urlButtonConfirm' => $urlButtonConfirm, 'data' => $data];
+        $this->addAction('SWEET-ALERT', ['params' => $params, 'urlButtonConfirm' => $urlButtonConfirm, 'data' => $data]);
     }
     
     public function XJscontrol($status = true){
@@ -220,6 +239,14 @@ class JsControl extends Widget{
             $sep = '&';
         }
         return $data;
+    }
+
+    public function addAction($action, $params = []){
+        $action = ['action' => $action];
+        foreach($params as $name => $value){
+            $action[$name] = $value;
+        }
+        $this->actions[] = $action; 
     }
     
     public function clearAction(){
@@ -243,11 +270,11 @@ class JsControl extends Widget{
     public function gritter($text, $title = null, $options = null) {
         $params['title'] = $title;
         $params['text']  = $text;
-        $this->actions[] = ['action' => 'GRITTER', 'params' => $params, 'options' => $options];
+        $this->addAction('GRITTER', ['params' => $params, 'options' => $options]);
     }
     
     public function send() {
-        $rq = \Yii::$app->request;
+        $rq = Yii::$app->request;
         if(count($this->actions) > 0 && ($rq->headers->has('X-JSCONTROL') || !$this->x_jscontrol)){
             echo Json::encode(['actions' => $this->actions, 'success' => $this->status]);
         }

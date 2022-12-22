@@ -74,6 +74,14 @@ function returnRequest(data) {
                     loadPlugins();
                 }
                 break;
+            case 'CREATE-MODAL':
+                $('body').append(act.data);
+                let sel = '#' + act.id +' .modal';
+                $(sel).modal('show');
+                $(sel).on('hidden.bs.modal', function(e) {
+                    $('#' + act.id).remove();
+                });
+                break;
             case 'OPEN-MODAL':
                 $('#modal').css('zIndex', getMaxZIndex());
                 $('#modal .modal-title').html(act.title);
@@ -97,7 +105,7 @@ function returnRequest(data) {
                 }
                 break;
             case 'CLOSE-MODAL':
-                $('.modal').modal('hide');
+                $(act.selector).modal('hide');
                 break;
             case 'ALERT':
                 alert(act.msg);
@@ -195,6 +203,12 @@ function returnRequest(data) {
                 } else if (act.type == 'focus') {
                     $(act.selector).focus();
                 }
+                break;
+            case 'APPEND':
+                $(act.selector).append(act.data);
+                break;
+            case 'PREPEND':
+                $(act.selector).prepend(act.data);
                 break;
             default:
                 break;
