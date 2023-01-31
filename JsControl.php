@@ -101,9 +101,8 @@ class JsControl extends Widget{
     /**
      * fecha todos os dialogs ou modais abertos
      */
-    public function closeDialog(){
-        $this->addAction('CLOSE-MODAL');
-        $this->actions[] = ['action' => 'CLOSE-MODAL'];
+    public function closeDialog($selector = '.modal'){
+        $this->addAction('CLOSE-MODAL', ['selector' => $selector]);
     }
 
     public function closeModal($selector = '.modal'){
@@ -175,6 +174,10 @@ class JsControl extends Widget{
 
     public function prepend($selector, $data){
         $this->addAction('PREPEND', ['selector' => $selector, 'data' => $data]);
+    }
+
+    public function replaceWith($selector, $data){
+        $this->addAction('REPLACE-WITH', ['selector' => $selector, 'data' => $data]);
     }
     
     public function miniMenu($mini = true){

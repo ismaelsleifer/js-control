@@ -210,6 +210,9 @@ function returnRequest(data) {
             case 'PREPEND':
                 $(act.selector).prepend(act.data);
                 break;
+            case 'REPLACE-WITH':
+                $(act.selector).replaceWith(act.data);
+                break;
             default:
                 break;
         }
