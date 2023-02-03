@@ -266,7 +266,9 @@ var eventsList = ['click', 'blur', 'change', 'submit'];
 
 $(eventsList).each(function(i, eventName) {
     $(document).on(eventName, '[data-jsc-event="' + eventName + '"]', function(e) {
-        e.preventDefault();
+        if($(this).attr('data-jsc-preventefault') != 'false'){
+            e.preventDefault();
+        }
         ajaxRequest($(this), eventName);
     });
 });
