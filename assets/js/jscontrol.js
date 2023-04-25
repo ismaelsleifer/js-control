@@ -213,6 +213,18 @@ function returnRequest(data) {
             case 'REPLACE-WITH':
                 $(act.selector).replaceWith(act.data);
                 break;
+            case 'FADEIN':
+                $(act.selector).fadeIn(act.duration);
+                break;
+            case 'FADEOUT':
+                $(act.selector).fadeOut(act.duration);
+                break;
+            case 'HIDE':
+                $(act.selector).hide();
+                break;
+            case 'ANIMATE':
+                $(act.selector).animate(act.params);
+                break;
             default:
                 break;
         }
@@ -422,7 +434,7 @@ function ajaxRequest(obj, eventName) {
         abort = obj.attr('data-jsc-ajax-abort');
     }
 
-    //	params.push({name: '_csrf', value: yii.getCsrfToken()});
+//	params.push({name: '_csrf', value: yii.getCsrfToken()});
 
     execAjax(url, params, loader, method, 'json', abort);
 }

@@ -179,6 +179,28 @@ class JsControl extends Widget{
     public function replaceWith($selector, $data){
         $this->addAction('REPLACE-WITH', ['selector' => $selector, 'data' => $data]);
     }
+
+    public function fadeIn($selector, $duration = null){
+        $this->addAction('FADEIN', ['selector' => $selector, 'duration' => $duration]);
+    }
+
+    public function fadeOut($selector, $duration = null){
+        $this->addAction('FADEOUT', ['selector' => $selector, 'duration' => $duration]);
+    }
+
+    public function hide($selector){
+        if(is_array($selector)){
+            foreach($selector as $s){
+                $this->addAction('HIDE', ['selector' => $s]);
+            }
+        }else{
+            $this->addAction('HIDE', ['selector' => $selector]);
+        }
+    }
+
+    public function animate($selector, $params){
+        $this->addAction('ANIMATE', ['selector' => $selector, 'params' => $params]);
+    }
     
     public function miniMenu($mini = true){
         unset($this->actions[0]);
