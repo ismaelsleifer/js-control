@@ -75,12 +75,15 @@ function returnRequest(data) {
                 }
                 break;
             case 'CREATE-MODAL':
-                $('body').append(act.data);
+                $('.container-modal').append(act.data);
                 let sel = '#' + act.id +' .modal';
                 $(sel).modal('show');
                 $(sel).on('hidden.bs.modal', function(e) {
                     $('#' + act.id).remove();
                 });
+                if (typeof loadPlugins == 'function') {
+                    loadPlugins();
+                }
                 break;
             case 'OPEN-MODAL':
                 $('#modal').css('zIndex', getMaxZIndex());
