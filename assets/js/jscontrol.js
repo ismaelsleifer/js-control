@@ -77,7 +77,7 @@ function returnRequest(data) {
             case 'CREATE-MODAL':
                 $('.container-modal').append(act.data);
                 let sel = '#' + act.id +' .modal';
-                $(sel).modal('show');
+                $(sel).modal(act.options);
                 $(sel).on('hidden.bs.modal', function(e) {
                     $('#' + act.id).remove();
                 });

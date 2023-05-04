@@ -93,9 +93,9 @@ class JsControl extends Widget{
     /**
      * inseri na tela um modal que foi criado no backend
      */
-    public function createModal($id, $html){
+    public function createModal($id, $html, $options = 'show'){
         $html = "<div id='{$id}'>{$html}</div>";
-        $this->addAction('CREATE-MODAL', ['data' => $html, 'id' => $id]);
+        $this->addAction('CREATE-MODAL', ['data' => $html, 'id' => $id, 'options' => $options]);
     }
     
     /**
