@@ -226,7 +226,7 @@ function returnRequest(data) {
                 $(act.selector).hide();
                 break;
             case 'SHOW':
-                $(act.selector).hide();
+                $(act.selector).show();
                 break;
             case 'ANIMATE':
                 $(act.selector).animate(act.params);
