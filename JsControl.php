@@ -198,6 +198,16 @@ class JsControl extends Widget{
         }
     }
 
+    public function show($selector){
+        if(is_array($selector)){
+            foreach($selector as $s){
+                $this->addAction('SHOW', ['selector' => $s]);
+            }
+        }else{
+            $this->addAction('SHOW', ['selector' => $selector]);
+        }
+    }
+
     public function animate($selector, $params){
         $this->addAction('ANIMATE', ['selector' => $selector, 'params' => $params]);
     }
