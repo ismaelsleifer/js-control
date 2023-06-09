@@ -231,6 +231,19 @@ function returnRequest(data) {
             case 'ANIMATE':
                 $(act.selector).animate(act.params);
                 break;
+            case 'CONSOLE':
+                switch (act.type){
+                    case 1:
+                        console.warn(act.text);
+                        break;
+                    case 2:
+                        console.info(act.text);
+                        break;
+                    default:
+                        console.log(act.text);
+                        break;
+                }
+                break;
             default:
                 break;
         }
