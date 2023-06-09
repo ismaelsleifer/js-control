@@ -11,7 +11,7 @@
     "homepage": "https://github.com/ismaelsleifer/js-control",
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
-    "version": "1.3.4",
+    "version": "1.3.5",
     "authors": [{
         "name": "Ismael Sleifer",
         "email": "ismaelsleifer@gmail.com",

@@ -18,6 +18,13 @@ class JsControl extends Widget{
     const GRITTER_POSITION_BOTTOM_RIGHT = 'bottom-right';
     const GRITTER_POSITION_TOP_RIGHT    = 'top-right'; // default
     const GRITTER_POSITION_TOP_LEFT     = 'top-left';
+
+
+    // constantes do tipo de retorno do console
+    const LOG = 0;
+    const WARNING = 1;
+    const INFO = 2;
+
     
     // private function __construct(){
     //     $view = $this->getView();
@@ -210,6 +217,10 @@ class JsControl extends Widget{
 
     public function animate($selector, $params){
         $this->addAction('ANIMATE', ['selector' => $selector, 'params' => $params]);
+    }
+
+    public function console($text, $type = self::LOG){
+        $this->addAction('CONSOLE', ['text'=> $text, 'type' => $type]);
     }
     
     public function miniMenu($mini = true){
