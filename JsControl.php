@@ -222,10 +222,13 @@ class JsControl extends Widget{
     public function console($text, $type = self::LOG){
         $this->addAction('CONSOLE', ['text'=> $text, 'type' => $type]);
     }
+
+    public function execAjax($url, $params = [], $loader = true, $type = 'POST', $dataType = 'json', $abort = true){
+        $this->addAction('EXEC-AJAX', ['url' => $url, 'params' => $params, 'loader' => $loader, 'type' => $type, 'dataType' => $dataType, 'abort' => $abort]);
+    }
     
     public function miniMenu($mini = true){
         unset($this->actions[0]);
-
         if(!IS_MOBILE){
             $this->actions[0] = ['action' => 'MINI-MENU', 'mini' => $mini] ;
         }

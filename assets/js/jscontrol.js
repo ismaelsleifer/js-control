@@ -244,6 +244,9 @@ function returnRequest(data) {
                         break;
                 }
                 break;
+            case 'EXEC-AJAX':
+                execAjax(act.url, act.params, act.loader, act.type, act.dataType, act.abort);
+                break;
             default:
                 break;
         }
