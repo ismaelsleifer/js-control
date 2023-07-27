@@ -226,6 +226,10 @@ class JsControl extends Widget{
     public function execAjax($url, $params = [], $loader = true, $type = 'POST', $dataType = 'json', $abort = true){
         $this->addAction('EXEC-AJAX', ['url' => $url, 'params' => $params, 'loader' => $loader, 'type' => $type, 'dataType' => $dataType, 'abort' => $abort]);
     }
+
+    public function reload(){
+        $this->addAction('RELOAD', []);
+    }
     
     public function miniMenu($mini = true){
         unset($this->actions[0]);

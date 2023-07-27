@@ -169,6 +169,9 @@ function returnRequest(data) {
             case 'NEW-TAB':
                 window.open(act.link, '_blank');
                 break;
+            case 'RELOAD':
+                location.reload();
+                break;
             case 'DOWNLOAD-PDF':
                 blob = new Blob([act.file], { type: 'application/pdf' });
                 var link = document.createElement('a');
