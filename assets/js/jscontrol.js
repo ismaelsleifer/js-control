@@ -299,7 +299,7 @@ function execAjax(url, data, loader, type, dataType, abort) {
     });
 }
 
-var eventsList = ['click', 'blur', 'change', 'submit'];
+var eventsList = ['click', 'blur', 'change', 'submit', 'focusout'];
 
 $(eventsList).each(function(i, eventName) {
     $(document).on(eventName, '[data-jsc-event="' + eventName + '"]', function(e) {
@@ -352,7 +352,7 @@ function ajaxRequest(obj, eventName) {
         params = obj.serializeArray();
     }
 
-    if (eventName == 'blur' && url == undefined) {
+    if (eventName == 'blur' || eventName == 'focusout' && url == undefined) {
         console.log('Para este tipo de evento deve ser informado o data-jsc-url');
         return;
     }
@@ -361,7 +361,7 @@ function ajaxRequest(obj, eventName) {
         params = params.concat($('[data-jsc-param-add=' + obj.attr('data-jsc-add') + ']').serializeArray());
     }
 
-    if (eventName == 'blur' || eventName == 'change') {
+    if (eventName == 'blur' || eventName == 'change' || eventName == 'focusout') {
 
         let type = obj.get(0).type;
 
